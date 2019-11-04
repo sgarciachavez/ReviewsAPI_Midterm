@@ -12,7 +12,6 @@ Supports operations for writing reviews and listing reviews for a product but wi
 
 ### Retrieve a Product 
 `GET` `/products/{productId}`
-This feature retrieves the Product data from the database. 
 
 ### List ALL Products
 `GET` `/products`
