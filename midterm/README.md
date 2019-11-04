@@ -1,24 +1,30 @@
 # Reviews API 
-Supports operations for writing reviews and listing reviews for a product but with no sorting or filtering.
+Supports operations for writing reviews and listing reviews for a product but with no sorting or filtering. Also supports writing comments to a review. 
 
-### Prerequisites
-MySQL needs to be installed and configured. Instructions provided separately.
+### Creating a Product
+`POST` `/products`
+```json
+{
+	"productName": "Avocado",
+	"productDescription" : "It's a fruit"
+}
+```
 
-### Getting Started
-* Configure the MySQL Datasource in application.properties.
-* Add Flyway scripts in src/main/resources/db/migration.
-* Define JPA Entities and relationships.
-* Define Spring Data JPA Repositories.
-* Add tests for JPA Repositories.
+### Retrieve a Product 
+`GET` `/products/{productId}`
+This feature retrieves the Product data from the database. 
 
-### Reference Documentation
-For further reference, please consider the following sections:
+### List ALL Products
+`GET` `/products`
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+### Creating a Review
+`POST` `/reviews/products/{productId}`
 
-### Guides
-The following guides illustrate how to use some features concretely:
+### Lists Reviews by product Id
+`GET` `/reviews/products/{productId}`
 
-* [Accessing JPA Data with REST](https://spring.io/guides/gs/accessing-data-rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+### Creating a Comment
+`POST` `/comments/reviews/{reviewId}`
+
+### Lists Comments by Review Id
+`GET` `/comments/reviews/{reviewId}`
