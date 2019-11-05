@@ -1,4 +1,4 @@
-# Reviews API 
+# Reviews API - Final
 Supports operations for writing reviews and listing reviews for a product but with no sorting or filtering. Also supports writing comments to a review. 
 
 ### Creating a Product
