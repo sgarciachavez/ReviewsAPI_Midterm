@@ -1,9 +1,12 @@
 package com.udacity.course3.reviews.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Product")
 @Table(name = "Products")
@@ -22,6 +25,10 @@ public class Product {
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
     @CreationTimestamp
     private Timestamp dateCreated;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", orphanRemoval = true)
+    @JsonManagedReference
+    private List<Review> reviews = new ArrayList<>();
 
     public Integer getProductID() {
         return productID;
@@ -49,5 +56,13 @@ public class Product {
 
     public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

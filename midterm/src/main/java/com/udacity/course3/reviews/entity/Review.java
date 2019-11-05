@@ -1,9 +1,13 @@
 package com.udacity.course3.reviews.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Reviews")
@@ -13,8 +17,9 @@ public class Review {
     @Column(name = "reviewID")
     private Integer reviewID;
 
-    @ManyToOne(targetEntity = Product.class)
-    @JoinColumn(name="productId", referencedColumnName = "productId")
+    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="productID", referencedColumnName = "productID")
+    @JsonBackReference
     private Product product;
 
     @Column(name="reviewText")
@@ -23,6 +28,10 @@ public class Review {
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
     @CreationTimestamp
     private Timestamp dateCreated;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "review", orphanRemoval = true)
+    @JsonManagedReference
+    private List<Comment> comments = new ArrayList<>();
 
     public Integer getReviewID() {
         return reviewID;
@@ -56,4 +65,11 @@ public class Review {
         this.dateCreated = dateCreated;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

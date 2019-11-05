@@ -1,5 +1,6 @@
 package com.udacity.course3.reviews.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,11 +14,14 @@ public class Comment {
     @Column(name = "commentID")
     private Integer commentID;
 
-    @ManyToOne(targetEntity = Review.class)
-    @JoinColumn(name="reviewId", referencedColumnName = "reviewId")
+    //@ManyToOne(targetEntity = Review.class)
+    //@JoinColumn(name="reviewId", referencedColumnName = "reviewId")
+    //private Review review;
+
+    @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="reviewID", referencedColumnName = "reviewID")
+    @JsonBackReference
     private Review review;
-    //@Column(name = "reviewID")
-    //private Integer reviewID;
 
     @Column(name="commentText")
     private String commentText;
