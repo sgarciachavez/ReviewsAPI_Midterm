@@ -32,7 +32,6 @@ public class ProductsController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createProduct(@RequestBody Product product) throws URISyntaxException {
-         System.out.println("createProduct!");
         //Make sure you're getting at least a product name otherwise do not save it
         String pName = product.getProductName();
         HttpHeaders responseHeader = new HttpHeaders();
@@ -70,13 +69,12 @@ public class ProductsController {
         HttpHeaders responseHeader = new HttpHeaders();
         if(p.isPresent()){
             responseHeader.set("productID", id.toString());
-            System.out.println("dateCreated: " + p.get().getDateCreated() );
             return ResponseEntity.ok()
                     .headers(responseHeader)
                     .body(p);
         }
         else{
-            responseHeader.set("productID", id.toString());
+            responseHeader.set("productID", "null");
             return ResponseEntity.notFound()
                     .headers(responseHeader)
                     .build();

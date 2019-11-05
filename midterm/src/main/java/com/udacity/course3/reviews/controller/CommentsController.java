@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,26 +37,21 @@ public class CommentsController {
      * @param reviewId The id of the review.
      */
     @RequestMapping(value = "/reviews/{reviewId}", method = RequestMethod.POST)
-    public ResponseEntity<?> createCommentForReview(@PathVariable("reviewId") Integer reviewId) {
+    public ResponseEntity<?> createCommentForReview(@PathVariable("reviewId") Integer reviewId, @RequestBody Comment comment) {
         //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         if(optionalReview.isPresent()){
-            //The review id is valid / present -- Create the comment!
-            Comment comment = new Comment();
-            comment.setReviewID(reviewId);
-            comment.setCommentText("Comment for reivew ID: " + reviewId);
+            //The review id is valid / present -- Save the comment!
+            comment.setReview(optionalReview.get());
             Comment c = commentRepository.save(comment);
 
-            //Set Temporary date!  It's null initially until the DB does it's magic. Hibernate returns null.
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            c.setDateCreated(timestamp);
-
             HttpHeaders responseHeader = new HttpHeaders();
-            responseHeader.set("commentID", c.getCommentID().toString());
+            responseHeader.set("reviewID", reviewId.toString());
+            responseHeader.set("commentID", c.toString());
             return ResponseEntity.ok().headers(responseHeader).body(c);
         }else{
             HttpHeaders responseHeader = new HttpHeaders();
-            responseHeader.set("reviewID", null);
+            responseHeader.set("reviewID", "null");
             return ResponseEntity.notFound().headers(responseHeader).build();
         }
     }
@@ -76,11 +70,13 @@ public class CommentsController {
         //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
         if(optionalReview.isPresent()){
-            List<?> list = commentRepository.findByReviewID(reviewId);
-            return ResponseEntity.ok(list);
+            List<Comment> list = commentRepository.findByReview(optionalReview.get());
+            HttpHeaders responseHeader = new HttpHeaders();
+            responseHeader.set("reviewID", reviewId.toString());
+            return ResponseEntity.ok().headers(responseHeader).body(list);
         }else{
             HttpHeaders responseHeader = new HttpHeaders();
-            responseHeader.set("reviewID", null);  //this header is not being set!  Why?
+            responseHeader.set("reviewID", "null");  //this header is not being set!  Why?
             return  ResponseEntity.notFound().headers(responseHeader).build();
         }
     }

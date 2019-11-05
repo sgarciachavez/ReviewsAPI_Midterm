@@ -1,5 +1,7 @@
 package com.udacity.course3.reviews.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -11,13 +13,15 @@ public class Review {
     @Column(name = "reviewID")
     private Integer reviewID;
 
-    @Column(name = "productID")
-    private Integer productID;
+    @ManyToOne(targetEntity = Product.class)
+    @JoinColumn(name="productId", referencedColumnName = "productId")
+    private Product product;
 
     @Column(name="reviewText")
     private String reviewText;
 
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
     private Timestamp dateCreated;
 
     public Integer getReviewID() {
@@ -28,12 +32,12 @@ public class Review {
         this.reviewID = reviewID;
     }
 
-    public Integer getProductID() {
-        return productID;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductID(Integer productID) {
-        this.productID = productID;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getReviewText() {

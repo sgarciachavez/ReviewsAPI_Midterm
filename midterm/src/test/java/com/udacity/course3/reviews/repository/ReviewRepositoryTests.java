@@ -39,17 +39,18 @@ public class ReviewRepositoryTests {
 
         //Now create a Review for the Product just saved
         Review review = new Review();
-        review.setProductID(p.getProductID());
+        //review.setProductID(p.getProductID());
+        review.setProduct(p);
         review.setReviewText("Review Test for Product ID: " + p.getProductID());
 
         Review r = reviewRepository.save(review);
 
-        List<Review> actual =(List<Review>) reviewRepository.findByProductID(p.getProductID());
+        List<Review> actual =(List<Review>) reviewRepository.findByProduct(p);
         Review ar = actual.get(0);
 
         assertEquals(actual.size(), 1);
         assertEquals(ar.getReviewID(), r.getReviewID());
-        assertEquals(ar.getProductID(), p.getProductID());
+        assertEquals(ar.getProduct(), p);
     }
 
     @Test
@@ -62,7 +63,8 @@ public class ReviewRepositoryTests {
 
         //Now create a Review for the Product just saved
         Review review = new Review();
-        review.setProductID(p.getProductID());
+        //review.setProductID(p.getProductID());
+        review.setProduct(p);
         review.setReviewText("Review Test for Product ID: " + p.getProductID());
 
         Review r = reviewRepository.save(review);

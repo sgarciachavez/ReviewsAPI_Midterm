@@ -1,4 +1,4 @@
-/Users/sylviagarcia-chavez/MySQLREST_API/midterm/src/test/java/com/udacity/course3/reviews/ReviewsApplicationTests.java
-/Users/sylviagarcia-chavez/MySQLREST_API/midterm/src/test/java/com/udacity/course3/reviews/repository/ReviewRepositoryTests.java
-/Users/sylviagarcia-chavez/MySQLREST_API/midterm/src/test/java/com/udacity/course3/reviews/repository/CommentRepositoryTests.java
-/Users/sylviagarcia-chavez/MySQLREST_API/midterm/src/test/java/com/udacity/course3/reviews/repository/ProductRepositoryTest.java
+/Users/sylviagarcia-chavez/ReviewsAPI_Midterm/midterm/src/test/java/com/udacity/course3/reviews/repository/ProductRepositoryTest.java
+/Users/sylviagarcia-chavez/ReviewsAPI_Midterm/midterm/src/test/java/com/udacity/course3/reviews/ReviewsApplicationTests.java
+/Users/sylviagarcia-chavez/ReviewsAPI_Midterm/midterm/src/test/java/com/udacity/course3/reviews/repository/CommentRepositoryTests.java
+/Users/sylviagarcia-chavez/ReviewsAPI_Midterm/midterm/src/test/java/com/udacity/course3/reviews/repository/ReviewRepositoryTests.java

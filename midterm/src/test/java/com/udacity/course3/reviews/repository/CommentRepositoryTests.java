@@ -40,23 +40,23 @@ public class CommentRepositoryTests {
 
         //Now create a Review for the Product just saved
         Review review = new Review();
-        review.setProductID(p.getProductID());
-        review.setReviewText("Review Test for Product ID: " + p.getProductID());
+        review.setProduct(p);
+        review.setReviewText("Review Test for Product ID: " + p.getProductID().toString());
 
         Review r = reviewRepository.save(review);
 
         //Now create a comment for the Review just saved!
         Comment comment = new Comment();
-        comment.setReviewID(r.getReviewID());
-        comment.setCommentText("This is a Comment for Review ID: " + r.getReviewID());
+        comment.setReview(r);
+        comment.setCommentText("This is a Comment for Review ID: " + r.getReviewID().toString());
 
         Comment c = commentRepository.save(comment);
 
-        List<Comment> actual = (List<Comment>) commentRepository.findByReviewID(r.getReviewID());
+        List<Comment> actual = (List<Comment>) commentRepository.findByReview(r);
         Comment ac = actual.get(0);
 
         assertEquals(actual.size(), 1);
-        assertEquals(ac.getReviewID(), r.getReviewID());
+        assertEquals(ac.getReview(), r);
         assertEquals(ac.getCommentID(), c.getCommentID());
     }
 
@@ -71,14 +71,14 @@ public class CommentRepositoryTests {
 
         //Now create a Review for the Product just saved
         Review review = new Review();
-        review.setProductID(p.getProductID());
-        review.setReviewText("Review Test for Product ID: " + p.getProductID());
+        review.setProduct(p);
+        review.setReviewText("Review Test for Product ID: " + p.getProductID().toString());
 
         Review r = reviewRepository.save(review);
 
         //Now create a comment for the Review just saved!
         Comment comment = new Comment();
-        comment.setReviewID(r.getReviewID());
+        comment.setReview(r);
         comment.setCommentText("This is a Comment for Review ID: " + r.getReviewID());
 
         Comment c = commentRepository.save(comment);

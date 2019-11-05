@@ -9,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,7 @@ public class ReviewsController {
      * @return The created review or 404 if product id is not found.
      */
     @RequestMapping(value = "/reviews/products/{productId}", method = RequestMethod.POST)
-    public ResponseEntity<?> createReviewForProduct(@PathVariable("productId") Integer productId) {
+    public ResponseEntity<?> createReviewForProduct(@PathVariable("productId") Integer productId, @RequestBody Review review) {
         //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
 
         Optional<Product> op = productRepository.findById(productId);
@@ -45,21 +44,17 @@ public class ReviewsController {
         if(op.isPresent() ){
             String productName = op.get().getProductName();
             //Product id was found!
-            Review review = new Review();
-            review.setProductID(productId);
-            review.setReviewText("Review for Product name: " + productName);
+            //review.setProductID(productId);
+            review.setProduct(op.get());
             Review r = reviewRepository.save(review);
-
-            //Set Temporary date!  It's null initially until the DB does it's magic. Hibernate returns null.
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            r.setDateCreated(timestamp);
 
             HttpHeaders responseHeader = new HttpHeaders();
             responseHeader.set("reviewID", r.getReviewID().toString());
+            responseHeader.set("productID", productId.toString());
             return ResponseEntity.ok().headers(responseHeader).body(r);
         }else{
             HttpHeaders responseHeader = new HttpHeaders();
-            responseHeader.set("productID", null);
+            responseHeader.set("productID", "null");
             return ResponseEntity.notFound().headers(responseHeader).build();
         }
     }
@@ -75,11 +70,14 @@ public class ReviewsController {
         //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
         Optional<Product> op = productRepository.findById(productId); //Is the product ID valid?
         if(op.isPresent()){
-            List<?> list = reviewRepository.findByProductID(productId);
-            return ResponseEntity.ok(list);
+            List<Review> list = reviewRepository.findByProduct(op.get());
+            HttpHeaders responseHeader = new HttpHeaders();
+            responseHeader.set("productID", productId.toString());
+            return ResponseEntity.ok().headers(responseHeader).body(list);
+
         }else{
             HttpHeaders responseHeader = new HttpHeaders();
-            responseHeader.set("productID", null);  //this header is not being set!  Why?
+            responseHeader.set("productID", "null");
             return  ResponseEntity.notFound().headers(responseHeader).build();
         }
     }

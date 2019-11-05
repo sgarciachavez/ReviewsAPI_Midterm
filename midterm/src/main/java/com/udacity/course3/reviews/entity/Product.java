@@ -1,9 +1,11 @@
 package com.udacity.course3.reviews.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "Product")
 @Table(name = "Products")
 public class Product {
     @Id
@@ -18,6 +20,7 @@ public class Product {
     private String productDescription;
 
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
     private Timestamp dateCreated;
 
     public Integer getProductID() {
