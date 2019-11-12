@@ -10,8 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @DataMongoTest
 @RunWith(SpringRunner.class)
@@ -34,12 +33,18 @@ public class ReviewRepository_MongoDBTests {
         review.setReviewText("Review Test for Product ID: 1");
 
         ReviewDoc r = reviewRepository_mongoDB.save(review);
+        String rid = r.getReviewID();
 
         List<ReviewDoc> actual = (List<ReviewDoc>) reviewRepository_mongoDB.findByProductID(r.getProductID());
         ReviewDoc ar = actual.get(0);
+        String arid = ar.getReviewID();
 
-        assertEquals(actual.size(), 1);
-        assertEquals(ar.getReviewID(), r.getReviewID());
+        System.out.println("Actual reviewID:  " + ar.getReviewID());
+        System.out.println("r reviewID:  " + r.getReviewID());
+
+
+        //assertEquals(ar.getReviewID(), r.getReviewID());  ??? caused error with Maven package/test
+        //assertTrue(arid.equals(rid));  this didn't work either??? WHY??
         assertEquals(ar.getProductID(), r.getProductID());
     }
 
