@@ -3,13 +3,13 @@ package com.udacity.course3.reviews.controller;
 import com.udacity.course3.reviews.entity.Product;
 import com.udacity.course3.reviews.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +21,8 @@ import java.util.Optional;
 public class ProductsController {
 
     // TODO: Wire JPA repositories here
-    @Autowired
-    private ProductRepository productRepository;
+    @Autowired  private ProductRepository productRepository;
+    @Value("${useMongoDB}") private String useMongoDB;
     /**
      * Creates a product.
      *
@@ -40,11 +40,7 @@ public class ProductsController {
         if(pName != null && pName.trim() != ""){
 
             Product p = productRepository.save(product); //Save it!
-            //Set Temporary date!  It's null initially until the DB does it's magic. Hibernate returns null.
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            p.setDateCreated(timestamp);
-
-            return findById(p.getProductID());
+            return findById(p.getId());
 
         }else{
             responseHeader.set("productID", null);
@@ -52,8 +48,6 @@ public class ProductsController {
                     .headers(responseHeader)
                     .body("Invalid Product name");
         }
-
-        //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
     }
 
     /**
@@ -90,7 +84,6 @@ public class ProductsController {
     public List<?> listProducts() {
 
         return (List<Product>) productRepository.findAll();
-
-        //throw new HttpServerErrorException(HttpStatus.NOT_IMPLEMENTED);
     }
+
 }

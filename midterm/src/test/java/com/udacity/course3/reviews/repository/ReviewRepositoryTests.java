@@ -41,7 +41,7 @@ public class ReviewRepositoryTests {
         Review review = new Review();
         //review.setProductID(p.getProductID());
         review.setProduct(p);
-        review.setReviewText("Review Test for Product ID: " + p.getProductID());
+        review.setReviewText("Review Test for Product ID: " + p.getId());
 
         Review r = reviewRepository.save(review);
 
@@ -65,7 +65,7 @@ public class ReviewRepositoryTests {
         Review review = new Review();
         //review.setProductID(p.getProductID());
         review.setProduct(p);
-        review.setReviewText("Review Test for Product ID: " + p.getProductID());
+        review.setReviewText("Review Test for Product ID: " + p.getId());
 
         Review r = reviewRepository.save(review);
 

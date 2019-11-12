@@ -41,7 +41,7 @@ public class CommentRepositoryTests {
         //Now create a Review for the Product just saved
         Review review = new Review();
         review.setProduct(p);
-        review.setReviewText("Review Test for Product ID: " + p.getProductID().toString());
+        review.setReviewText("Review Test for Product ID: " + p.getId().toString());
 
         Review r = reviewRepository.save(review);
 
@@ -72,7 +72,7 @@ public class CommentRepositoryTests {
         //Now create a Review for the Product just saved
         Review review = new Review();
         review.setProduct(p);
-        review.setReviewText("Review Test for Product ID: " + p.getProductID().toString());
+        review.setReviewText("Review Test for Product ID: " + p.getId().toString());
 
         Review r = reviewRepository.save(review);
 

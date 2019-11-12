@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "Review")
 @Table(name = "Reviews")
 public class Review {
     @Id
@@ -18,12 +18,15 @@ public class Review {
     private Integer reviewID;
 
     @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name="productID", referencedColumnName = "productID")
+    @JoinColumn(name="productID", referencedColumnName = "id")
     @JsonBackReference
     private Product product;
 
     @Column(name="reviewText")
     private String reviewText;
+
+    @Column(name="dataSource")
+    private String dataSource = "mysql";
 
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -35,10 +38,6 @@ public class Review {
 
     public Integer getReviewID() {
         return reviewID;
-    }
-
-    public void setReviewID(Integer reviewID) {
-        this.reviewID = reviewID;
     }
 
     public Product getProduct() {
@@ -57,6 +56,22 @@ public class Review {
         this.reviewText = reviewText;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public Timestamp getDateCreated() {
         return dateCreated;
     }
@@ -65,11 +80,4 @@ public class Review {
         this.dateCreated = dateCreated;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 }

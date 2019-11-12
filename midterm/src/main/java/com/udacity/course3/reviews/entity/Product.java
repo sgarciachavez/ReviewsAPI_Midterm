@@ -13,14 +13,17 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productID")
-    private Integer productID;
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "productName")
     private String productName;
 
     @Column(name="productDescription")
     private String productDescription;
+
+    @Column(name="dataSource")
+    private String dataSource = "mysql";
 
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -30,8 +33,8 @@ public class Product {
     @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
-    public Integer getProductID() {
-        return productID;
+    public Integer getId() {
+        return id;
     }
 
     public String getProductName() {
@@ -56,6 +59,14 @@ public class Product {
 
     public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public List<Review> getReviews() {

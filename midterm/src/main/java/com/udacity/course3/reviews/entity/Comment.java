@@ -14,9 +14,9 @@ public class Comment {
     @Column(name = "commentID")
     private Integer commentID;
 
-    //@ManyToOne(targetEntity = Review.class)
-    //@JoinColumn(name="reviewId", referencedColumnName = "reviewId")
-    //private Review review;
+//    @ManyToOne(targetEntity = Review.class)
+//    @JoinColumn(name="reviewId", referencedColumnName = "reviewId")
+//    private Review review;
 
     @ManyToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="reviewID", referencedColumnName = "reviewID")
@@ -25,6 +25,9 @@ public class Comment {
 
     @Column(name="commentText")
     private String commentText;
+
+    @Column(name="dataSource")
+    private String dataSource = "mysql";
 
     @Column(name="dateCreated", columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -56,6 +59,14 @@ public class Comment {
 
     public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 }
 
